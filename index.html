@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knesset Live Results</title>
+<style>
+  :root { --bg: #f4f5f7; --card: #fff; --ink: #202122; --muted: #5f6368; --line: #dde1e6; --accent: #3366cc; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 "Segoe UI", Arial, sans-serif; }
+  header { padding: 16px 24px; background: var(--card); border-bottom: 1px solid var(--line); }
+  h1 { margin: 0; font-size: 20px; }
+  h2 { margin: 0 0 10px; font-size: 16px; }
+  #status { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  #error { color: #b3261e; }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 16px 24px; display: grid; gap: 16px; }
+  .scope { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+  #img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 6px; cursor: grab; }
+  textarea { width: 100%; height: 420px; font: 13px/1.5 Consolas, monospace; border: 1px solid var(--line); border-radius: 6px; padding: 10px; resize: vertical; }
+  button, .btn, select, input { font: inherit; border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; background: #fff; color: var(--ink); }
+  button, .btn { cursor: pointer; text-decoration: none; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  #city { min-width: 260px; } #ballot { max-width: 420px; }
+  .actions { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+  .hint { color: var(--muted); font-size: 13px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
+  .stats b { color: var(--ink); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 4px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.out td { color: var(--muted); }
+  td input[type=text] { width: 100%; min-width: 180px; padding: 3px 6px; }
+  input[type=color] { padding: 0; width: 34px; height: 26px; }
+  .arrows button { padding: 0 6px; }
+  #agreements div { margin-bottom: 6px; }
+  label { margin-right: 16px; }
+  label input { width: 90px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Knesset <span id="kn"></span> live results</h1>
+  <div id="status">Connecting to the local server…</div>
+</header>
+
+<div class="wrap">
+  <div class="card scope">
+    <button id="national" class="primary">National</button>
+    <input id="city" list="cities" placeholder="Municipality (type to search)…" dir="auto" autocomplete="off">
+    <datalist id="cities"></datalist>
+    <select id="ballot" disabled><option value="">All polling stations</option></select>
+    <span id="error"></span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <img id="img" alt="Knesset seat diagram" draggable="true">
+      <div class="actions">
+        <button id="copyImg" class="primary">Copy image</button>
+        <a id="dl" class="btn">Download PNG</a>
+        <span class="hint">Paste into Discord with Ctrl+V, or drag the image into the chat.</span>
+      </div>
+    </div>
+    <div class="card">
+      <textarea id="txt" readonly dir="auto"></textarea>
+      <div class="actions" id="copyTxt"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Lists</h2>
+    <div class="stats" id="stats"></div>
+    <p class="hint">Rename or recolor a list here (blank name = name from the site). ▲▼ set the left-to-right order in the diagram.</p>
+    <table>
+      <thead><tr><th></th><th></th><th>Name</th><th>Letters</th><th class="num">Votes</th><th class="num">%</th><th class="num">Seats</th></tr></thead>
+      <tbody id="tbl"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Surplus agreements</h2>
+    <p class="hint">Each pair counts as one list for leftover seats (only if both pass the threshold).</p>
+    <div id="agreements"></div>
+    <button id="addPair">Add agreement</button>
+  </div>
+
+  <details class="card">
+    <summary>Settings</summary>
+    <p>
+      <label>Knesset # <input id="setKnesset" type="number" min="1"></label>
+      <label>Check every (s) <input id="setPoll" type="number" min="30"></label>
+      <label>Threshold % <input id="setThreshold" type="number" step="0.05" min="0"></label>
+    </p>
+    <p class="hint">Set Knesset # to 25 to try the app on the 2022 results. Results are checked by loading the national page
+      once per interval (the site caches pages for 60 s anyway); municipality and polling-station pages are loaded only when you
+      open them, and again only after the national results change.</p>
+  </details>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const PALETTE = ['#e6194b', '#3cb44b', '#f58231', '#4363d8', '#911eb4', '#42d4f4', '#f032e6', '#9a6324', '#800000', '#808000', '#000075', '#a9a9a9'];
+let cfg, site, ver = -1, data, lastChange, cities = [], ballots = [], scope = {}, png;
+
+async function api(path, body) {
+  const r = await fetch(path, body && { method: 'POST', body: JSON.stringify(body) });
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error);
+  return j;
+}
+const save = () => api('/api/config', cfg);
+const esc = s => String(s).replace(/[&<>"]/g, c => `&#${c.charCodeAt(0)};`);
+const fmt = n => n.toLocaleString('en-US');
+const time = iso => iso ? new Date(iso).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '—';
+// Names, colours, order and surplus agreements are per election: ballot letters get reused by different lists.
+const E = () => cfg.elections[cfg.knesset] ??= { parties: {}, agreements: [], order: [] };
+const party = l => E().parties[l.letters] || {};
+const siteName = l => l.name.split(/\s*-?\s*(?:בראשות|בהנהגת)\s/)[0].trim();
+const nameOf = l => party(l).name || siteName(l);
+const colorOf = l => party(l).color || PALETTE[[...l.letters].reduce((h, c) => h * 31 + c.charCodeAt(0), 7) % PALETTE.length];
+const valid = () => data.lists.reduce((s, l) => s + l.votes, 0);
+const pct = l => (100 * l.votes / (valid() || 1)).toFixed(2) + '%';
+
+function title() {
+  const city = cities.find(c => c[0] === scope.city), ballot = ballots.find(b => b[0] === scope.ballot);
+  const where = !city ? 'National results' : ballot ? `${city[1]} · ${ballot[1].replace(/\s*מספר ברזל.*$/, '')}` : city[1];
+  return `Knesset ${cfg.knesset} · ${where}`;
+}
+
+// Seated lists in diagram order: the saved order first, then the rest by seats.
+function seated() {
+  const rank = l => { const i = E().order.indexOf(l.letters); return i < 0 ? 1e9 - l.seats : i; };
+  return data.lists.filter(l => l.seats).sort((a, b) => rank(a) - rank(b));
+}
+
+// Seat layout of the parliament diagram tool used for Wikipedia's hemicycles (parliamentdiagram.toolforge.org).
+function seatPositions(n) {
+  const totals = [3, 15, 33, 61, 95, 138, 189, 247, 313, 388, 469, 559, 657, 762, 876, 997];
+  const rows = totals.findIndex(t => t >= n) + 1, rad = 0.4 / rows, pos = [];
+  const ring = (R, J) => {
+    for (let j = 0; j < J; j++) {
+      const a = J === 1 ? Math.PI / 2 : j * (Math.PI - 2 * Math.sin(rad / R)) / (J - 1) + Math.sin(rad / R);
+      pos.push([a, R * Math.cos(a) + 1.75, R * Math.sin(a)]);
+    }
+  };
+  for (let i = 1; i < rows; i++)
+    ring((3 * rows + 4 * i - 2) / (4 * rows), Math.floor(n / totals[rows - 1] * Math.PI / (2 * Math.asin(2 / (3 * rows + 4 * i - 2)))));
+  ring((7 * rows - 2) / (4 * rows), n - pos.length);
+  return { rad, pos: pos.sort((p, q) => q[0] - p[0]) };  // left to right
+}
+
+function drawImage() {
+  const lists = seated(), total = lists.reduce((s, l) => s + l.seats, 0);
+  const W = 1000, s = W / 3.6, top = 135, rowH = 46, perCol = Math.ceil(lists.length / 2), legendTop = top + 1.8 * s + 40;
+  const out = below(), outPer = Math.ceil(out.length / 2), outTop = legendTop + perCol * rowH + 30;
+  const cv = document.createElement('canvas'), ctx = cv.getContext('2d');
+  cv.width = W; cv.height = outTop + (out.length ? 50 + outPer * 30 : 0) + 20;
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#202122'; ctx.font = 'bold 34px Arial, sans-serif'; ctx.fillText(title(), W / 2, 50);
+  ctx.fillStyle = '#54595d'; ctx.font = '20px Arial, sans-serif';
+  ctx.fillText(`${fmt(valid())} valid votes · updated ${time(lastChange)}`, W / 2, 84);
+  ctx.direction = 'rtl'; ctx.fillText(data.status, W / 2, 112); ctx.direction = 'ltr';
+  if (total) {
+    const { rad, pos } = seatPositions(total);
+    let k = 0;
+    for (const l of lists) {
+      ctx.fillStyle = colorOf(l);
+      for (let i = 0; i < l.seats; i++) {
+        const [, x, y] = pos[k++];
+        ctx.beginPath(); ctx.arc((x + 0.05) * s, top + (1.8 - y) * s, rad * s, 0, 2 * Math.PI); ctx.fill();
+      }
+    }
+    ctx.fillStyle = '#202122'; ctx.font = `bold ${Math.round(0.36 * s)}px Arial, sans-serif`;
+    ctx.fillText(total, 1.8 * s, top + 1.75 * s);
+  }
+  ctx.font = '24px Arial, sans-serif'; ctx.textBaseline = 'middle';
+  lists.forEach((l, i) => {
+    const x = 70 + Math.floor(i / perCol) * (W - 100) / 2, y = legendTop + (i % perCol) * rowH + 15;
+    ctx.fillStyle = colorOf(l); ctx.beginPath(); ctx.arc(x + 12, y, 13, 0, 2 * Math.PI); ctx.fill();
+    ctx.fillStyle = '#202122';
+    ctx.textAlign = 'right'; ctx.font = 'bold 24px Arial, sans-serif'; ctx.fillText(l.seats, x + 80, y);
+    ctx.textAlign = 'left'; ctx.font = '24px Arial, sans-serif'; ctx.fillText(nameOf(l), x + 95, y, 340);
+  });
+  if (out.length) {
+    ctx.textAlign = 'left'; ctx.fillStyle = '#54595d'; ctx.font = 'bold 20px Arial, sans-serif';
+    ctx.fillText(thresholdLabel(), 40, outTop);
+    ctx.font = '18px Arial, sans-serif';
+    out.forEach((l, i) => {
+      const x = 40 + Math.floor(i / outPer) * (W - 60) / 2, y = outTop + 36 + (i % outPer) * 30;
+      ctx.fillStyle = colorOf(l); ctx.beginPath(); ctx.arc(x + 7, y, 7, 0, 2 * Math.PI); ctx.fill();
+      ctx.fillStyle = '#202122';
+      ctx.textAlign = 'right'; ctx.fillText(pct(l), x + 85, y); ctx.fillText(fmt(l.votes), x + 180, y);
+      ctx.textAlign = 'left'; ctx.fillText(nameOf(l), x + 195, y, 260);
+    });
+  }
+  if (!lists.length) { ctx.textAlign = 'center'; ctx.fillText('No list has passed the threshold yet', W / 2, top + s); }
+  cv.toBlob(b => {
+    png = b;
+    URL.revokeObjectURL($('img').src);
+    $('img').src = $('dl').href = URL.createObjectURL(b);
+    $('dl').download = title().replace(/[\\/:*?"<>|·]+/g, '-') + '.png';
+  });
+}
+
+const below = () => data.lists.filter(l => !l.seats).sort((a, b) => b.votes - a.votes);
+const thresholdLabel = () => `Below the ${+(cfg.threshold * 100).toFixed(2)}% threshold`;
+
+function discordText() {
+  const turnout = data.summary.find(([k]) => k.includes('שיעור'));
+  const bySeats = data.lists.filter(l => l.seats).sort((a, b) => b.seats - a.seats || b.votes - a.votes);
+  return [
+    `**${title()}**`,
+    `${fmt(valid())} valid votes${turnout ? ` · turnout ${turnout[1]}` : ''} · updated ${time(lastChange)}`,
+    data.status,
+    ...(scope.city ? ['_Seats if the whole country voted like this_'] : []),
+    '',
+    ...bySeats.map(l => `**${l.seats}** ${nameOf(l)} — ${pct(l)} (${fmt(l.votes)})`),
+    '',
+    `__${thresholdLabel()}__`,
+    ...below().map(l => `${nameOf(l)} — ${pct(l)} (${fmt(l.votes)})`),
+  ].join('\n');
+}
+
+// Discord messages max out at 2000 characters: split at line breaks into pasteable parts.
+function parts(text) {
+  const out = [''];
+  for (const line of text.split('\n')) {
+    if (out.at(-1) && out.at(-1).length + line.length + 1 > 2000) out.push('');
+    out[out.length - 1] += (out.at(-1) ? '\n' : '') + line;
+  }
+  return out;
+}
+
+function renderTable() {
+  $('stats').innerHTML = data.summary.map(([k, v]) => `<span dir="rtl">${esc(k)}: <b>${esc(v)}</b></span>`).join('');
+  const rest = data.lists.filter(l => !l.seats).sort((a, b) => b.votes - a.votes);
+  $('tbl').innerHTML = [...seated(), ...rest].map(l => `
+    <tr class="${l.seats ? '' : 'out'}" data-letters="${esc(l.letters)}">
+      <td class="arrows">${l.seats ? '<button data-move="-1" title="Move left">▲</button><button data-move="1" title="Move right">▼</button>' : ''}</td>
+      <td><input type="color" value="${colorOf(l)}"></td>
+      <td><input type="text" dir="auto" value="${esc(party(l).name || '')}" placeholder="${esc(siteName(l))}" title="${esc(l.name)}"></td>
+      <td dir="rtl">${esc(l.letters)}</td>
+      <td class="num">${fmt(l.votes)}</td><td class="num">${pct(l)}</td><td class="num"><b>${l.seats || ''}</b></td>
+    </tr>`).join('');
+}
+
+function renderAgreements() {
+  const opts = [...data.lists].sort((a, b) => b.votes - a.votes)
+    .map(l => `<option value="${esc(l.letters)}">${esc(nameOf(l))} (${esc(l.letters)})</option>`).join('');
+  $('agreements').innerHTML = E().agreements.map((p, i) =>
+    `<div>${p.map((_, j) => `<select data-i="${i}" data-j="${j}"><option value="">— choose —</option>${opts}</select>`).join(' + ')}
+     <button data-del="${i}" title="Remove">✕</button></div>`).join('');
+  $('agreements').querySelectorAll('select').forEach(s => s.value = E().agreements[s.dataset.i][s.dataset.j]);
+}
+
+function render() {
+  renderTable(); renderAgreements(); drawImage();
+  $('txt').value = discordText();
+  const p = parts($('txt').value);
+  $('copyTxt').innerHTML = p.map((t, i) =>
+    `<button class="primary" data-part="${i}">${p.length > 1 ? `Copy part ${i + 1} of ${p.length}` : 'Copy text'}</button>`).join('')
+    + (p.length > 1 ? '<span class="hint">Over Discord\'s 2000-character limit, so it\'s split into one message per part.</span>' : '');
+  $('copyTxt').parts = p;
+}
+
+async function load() {
+  try {
+    data = await api('/api/results?' + new URLSearchParams(scope));
+    $('error').textContent = '';
+    render();
+  } catch (e) { $('error').textContent = e.message; }
+}
+
+async function poll() {
+  try {
+    const s = await api('/api/state');
+    if (cfg && s.config.knesset !== cfg.knesset) { cities = []; scope = {}; $('city').value = ''; }
+    cfg = s.config; site = s.site; lastChange = s.last_change;
+    $('kn').textContent = cfg.knesset;
+    $('status').textContent = `${site} · ${s.status === 'ok' ? 'connected' : s.status} · checked ${time(s.last_check)} · last new results ${time(s.last_change)}`;
+    if (s.version !== ver) { ver = s.version; await load(); }
+  } catch (e) { $('status').textContent = 'Local server is not running. Start it with start.bat.'; }
+}
+
+async function loadCities() {
+  if (cities.length) return;
+  try {
+    cities = await api('/api/cities');
+    $('cities').innerHTML = cities.map(c => `<option value="${esc(c[1])}">`).join('');
+  } catch (e) { $('error').textContent = e.message; }
+}
+
+$('city').onfocus = loadCities;
+$('city').onchange = async () => {
+  const city = cities.find(c => c[1] === $('city').value.trim());
+  if (!city) return;
+  scope = { city: city[0] };
+  $('ballot').disabled = true;
+  $('ballot').innerHTML = '<option value="">All polling stations</option>';
+  load();
+  try {
+    ballots = await api('/api/ballots?city=' + encodeURIComponent(city[0]));
+    $('ballot').innerHTML += ballots.map(b => `<option value="${esc(b[0])}">${esc(b[1])}</option>`).join('');
+    $('ballot').disabled = false;
+  } catch (e) { $('error').textContent = e.message; }
+};
+$('ballot').onchange = () => {
+  scope = $('ballot').value ? { city: scope.city, ballot: $('ballot').value } : { city: scope.city };
+  load();
+};
+$('national').onclick = () => {
+  scope = {}; $('city').value = ''; $('ballot').disabled = true;
+  $('ballot').innerHTML = '<option value="">All polling stations</option>';
+  load();
+};
+
+$('tbl').onclick = e => {
+  const d = +e.target.dataset.move;
+  if (!d) return;
+  const order = seated().map(l => l.letters), i = order.indexOf(e.target.closest('tr').dataset.letters), j = i + d;
+  if (j < 0 || j >= order.length) return;
+  [order[i], order[j]] = [order[j], order[i]];
+  E().order = [...order, ...E().order.filter(x => !order.includes(x))];
+  save(); render();
+};
+$('tbl').onchange = e => {
+  const letters = e.target.closest('tr').dataset.letters, p = E().parties[letters] = { ...E().parties[letters] };
+  if (e.target.type === 'color') p.color = e.target.value;
+  else if (e.target.value.trim()) p.name = e.target.value.trim();
+  else delete p.name;
+  save(); render();
+};
+
+$('agreements').onchange = e => {
+  E().agreements[e.target.dataset.i][e.target.dataset.j] = e.target.value;
+  save().then(load);
+};
+$('agreements').onclick = e => {
+  if (!e.target.dataset.del) return;
+  E().agreements.splice(+e.target.dataset.del, 1);
+  save().then(load);
+};
+$('addPair').onclick = () => { E().agreements.push(['', '']); if (data) renderAgreements(); };
+
+document.querySelector('details').ontoggle = () => {
+  $('setKnesset').value = cfg.knesset; $('setPoll').value = cfg.poll_seconds; $('setThreshold').value = +(cfg.threshold * 100).toFixed(2);
+};
+$('setKnesset').onchange = e => { cfg.knesset = +e.target.value; save().then(poll); };
+$('setPoll').onchange = e => { cfg.poll_seconds = Math.max(30, +e.target.value); save(); };
+$('setThreshold').onchange = e => { cfg.threshold = +e.target.value / 100; save().then(load); };
+
+const flash = (btn, msg) => { const t = btn.textContent; btn.textContent = msg; setTimeout(() => btn.textContent = t, 1500); };
+$('copyImg').onclick = e => navigator.clipboard.write([new ClipboardItem({ 'image/png': png })])
+  .then(() => flash(e.target, 'Copied!'), err => alert('Copy failed: ' + err.message));
+$('copyTxt').onclick = e => e.target.dataset.part && navigator.clipboard.writeText($('copyTxt').parts[e.target.dataset.part])
+  .then(() => flash(e.target, 'Copied!'), err => alert('Copy failed: ' + err.message));
+
+poll();
+setInterval(poll, 5000);
+</script>
+</body>
+</html>

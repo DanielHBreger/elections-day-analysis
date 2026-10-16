@@ -1,0 +1,46 @@
+{
+  "knesset": 25,
+  "poll_seconds": 60,
+  "seats": 120,
+  "threshold": 0.0325,
+  "elections": {
+    "25": {
+      "agreements": [["מחל", "ט"], ["פה", "כן"], ["שס", "ג"], ["אמת", "מרצ"]],
+      "order": [],
+      "parties": {
+        "מחל": {"name": "Likud", "color": "#1f4e9c"},
+        "פה": {"name": "Yesh Atid", "color": "#25a8e0"},
+        "ט": {"name": "Religious Zionism", "color": "#e8a317"},
+        "כן": {"name": "National Unity", "color": "#7f9fd8"},
+        "שס": {"name": "Shas", "color": "#1a1a1a"},
+        "ג": {"name": "UTJ", "color": "#6e6e6e"},
+        "ל": {"name": "Yisrael Beiteinu", "color": "#11808c"},
+        "עם": {"name": "Ra'am", "color": "#2e7d32"},
+        "ום": {"name": "Hadash-Ta'al", "color": "#c62828"},
+        "אמת": {"name": "Labor", "color": "#ec5466"},
+        "מרצ": {"name": "Meretz", "color": "#6abf3f"},
+        "ד": {"name": "Balad", "color": "#7b1fa2"},
+        "ב": {"name": "Jewish Home", "color": "#4a6b8a"}
+      }
+    },
+    "26": {
+      "agreements": [["מחל", "ט"], ["שס", "ג"], ["דרך", "אמת"], ["רק", "ל"], ["עם", "ודם"]],
+      "order": [],
+      "parties": {
+        "מחל": {"name": "Likud", "color": "#1f4e9c"},
+        "רק": {"name": "Together (Bennett)", "color": "#25a8e0"},
+        "דרך": {"name": "Yashar! (Eisenkot)", "color": "#8e44ad"},
+        "ט": {"name": "Religious Zionism", "color": "#e8a317"},
+        "ב": {"name": "Otzma Yehudit", "color": "#d35400"},
+        "שס": {"name": "Shas", "color": "#1a1a1a"},
+        "ג": {"name": "UTJ", "color": "#6e6e6e"},
+        "ל": {"name": "Yisrael Beiteinu", "color": "#11808c"},
+        "כן": {"name": "Blue and White", "color": "#7f9fd8"},
+        "די": {"name": "Reservists & Economic", "color": "#6b7d2f"},
+        "אמת": {"name": "Democrats", "color": "#ec5466"},
+        "עם": {"name": "Ra'am", "color": "#2e7d32"},
+        "ודם": {"name": "Joint List", "color": "#c62828"}
+      }
+    }
+  }
+}
