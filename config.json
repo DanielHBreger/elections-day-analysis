@@ -1,46 +1,1195 @@
 {
-  "knesset": 25,
+  "knesset": 26,
   "poll_seconds": 60,
+  "poll_spreadsheet": false,
   "seats": 120,
   "threshold": 0.0325,
   "elections": {
-    "25": {
-      "agreements": [["מחל", "ט"], ["פה", "כן"], ["שס", "ג"], ["אמת", "מרצ"]],
+    "26": {
+      "agreements": [
+        [
+          "מחל",
+          "ט"
+        ],
+        [
+          "שס",
+          "ג"
+        ],
+        [
+          "דרך",
+          "אמת"
+        ],
+        [
+          "רק",
+          "ל"
+        ],
+        [
+          "עם",
+          "ודם"
+        ]
+      ],
       "order": [],
       "parties": {
-        "מחל": {"name": "Likud", "color": "#1f4e9c"},
-        "פה": {"name": "Yesh Atid", "color": "#25a8e0"},
-        "ט": {"name": "Religious Zionism", "color": "#e8a317"},
-        "כן": {"name": "National Unity", "color": "#7f9fd8"},
-        "שס": {"name": "Shas", "color": "#1a1a1a"},
-        "ג": {"name": "UTJ", "color": "#6e6e6e"},
-        "ל": {"name": "Yisrael Beiteinu", "color": "#11808c"},
-        "עם": {"name": "Ra'am", "color": "#2e7d32"},
-        "ום": {"name": "Hadash-Ta'al", "color": "#c62828"},
-        "אמת": {"name": "Labor", "color": "#ec5466"},
-        "מרצ": {"name": "Meretz", "color": "#6abf3f"},
-        "ד": {"name": "Balad", "color": "#7b1fa2"},
-        "ב": {"name": "Jewish Home", "color": "#4a6b8a"}
+        "מחל": {
+          "name": "Likud",
+          "color": "#1f4e9c",
+          "bloc": "coalition"
+        },
+        "רק": {
+          "name": "Together (Bennett)",
+          "color": "#25a8e0",
+          "bloc": "alternative"
+        },
+        "דרך": {
+          "name": "Yashar! (Eisenkot)",
+          "color": "#8e44ad",
+          "bloc": "alternative"
+        },
+        "ט": {
+          "name": "Religious Zionism",
+          "color": "#e8a317",
+          "bloc": "coalition"
+        },
+        "ב": {
+          "name": "Otzma Yehudit",
+          "color": "#d35400",
+          "bloc": "coalition"
+        },
+        "שס": {
+          "name": "Shas",
+          "color": "#1a1a1a",
+          "bloc": "coalition"
+        },
+        "ג": {
+          "name": "UTJ",
+          "color": "#6e6e6e",
+          "bloc": "coalition"
+        },
+        "ל": {
+          "name": "Yisrael Beiteinu",
+          "color": "#11808c",
+          "bloc": "alternative"
+        },
+        "כן": {
+          "name": "Blue and White",
+          "color": "#7f9fd8",
+          "bloc": "alternative"
+        },
+        "די": {
+          "name": "Reservists & Economic",
+          "color": "#6b7d2f",
+          "bloc": "alternative"
+        },
+        "אמת": {
+          "name": "Democrats",
+          "color": "#ec5466",
+          "bloc": "alternative"
+        },
+        "עם": {
+          "name": "Ra'am",
+          "color": "#2e7d32",
+          "bloc": "arab"
+        },
+        "ודם": {
+          "name": "Joint List",
+          "color": "#c62828",
+          "bloc": "arab"
+        },
+        "ד": {
+          "bloc": "arab",
+          "name": "Partnership for All"
+        },
+        "ני": {
+          "bloc": "coalition",
+          "name": "Noam"
+        },
+        "ך": {
+          "bloc": "coalition",
+          "name": "Amcha Yisrael (Winter)"
+        }
+      },
+      "blocs": [
+        {
+          "id": "coalition",
+          "name": "Outgoing coalition",
+          "color": "#1f4e9c"
+        },
+        {
+          "id": "alternative",
+          "name": "Alternative government bloc",
+          "color": "#18a07a"
+        },
+        {
+          "id": "arab",
+          "name": "Arab parties",
+          "color": "#c62828"
+        },
+        {
+          "id": "other",
+          "name": "Other lists",
+          "color": "#9aa5b5"
+        }
+      ],
+      "polls": []
+    },
+    "25": {
+      "agreements": [
+        [
+          "מחל",
+          "ט"
+        ],
+        [
+          "פה",
+          "כן"
+        ],
+        [
+          "שס",
+          "ג"
+        ],
+        [
+          "אמת",
+          "מרצ"
+        ]
+      ],
+      "order": [],
+      "parties": {
+        "מחל": {
+          "name": "Likud",
+          "color": "#1f4e9c",
+          "bloc": "netanyahu"
+        },
+        "פה": {
+          "name": "Yesh Atid",
+          "color": "#25a8e0",
+          "bloc": "anti"
+        },
+        "ט": {
+          "name": "Religious Zionism",
+          "color": "#e8a317",
+          "bloc": "netanyahu"
+        },
+        "כן": {
+          "name": "National Unity",
+          "color": "#7f9fd8",
+          "bloc": "anti"
+        },
+        "שס": {
+          "name": "Shas",
+          "color": "#1a1a1a",
+          "bloc": "netanyahu"
+        },
+        "ג": {
+          "name": "UTJ",
+          "color": "#6e6e6e",
+          "bloc": "netanyahu"
+        },
+        "ל": {
+          "name": "Yisrael Beiteinu",
+          "color": "#11808c",
+          "bloc": "anti"
+        },
+        "עם": {
+          "name": "Ra'am",
+          "color": "#2e7d32",
+          "bloc": "arab"
+        },
+        "ום": {
+          "name": "Hadash-Ta'al",
+          "color": "#c62828",
+          "bloc": "arab"
+        },
+        "אמת": {
+          "name": "Labor",
+          "color": "#ec5466",
+          "bloc": "anti"
+        },
+        "מרצ": {
+          "name": "Meretz",
+          "color": "#6abf3f",
+          "bloc": "anti"
+        },
+        "ד": {
+          "name": "Balad",
+          "color": "#7b1fa2",
+          "bloc": "arab"
+        },
+        "ב": {
+          "name": "Jewish Home",
+          "color": "#4a6b8a"
+        },
+        "זץ": {
+          "bloc": "netanyahu",
+          "name": "Tzomet"
+        },
+        "יז": {
+          "bloc": "anti",
+          "name": "New Economic Party"
+        },
+        "ינ": {
+          "bloc": "arab"
+        },
+        "אצ": {
+          "name": "Free Economy"
+        }
+      },
+      "blocs": [
+        {
+          "id": "netanyahu",
+          "name": "Netanyahu bloc",
+          "color": "#1f4e9c"
+        },
+        {
+          "id": "anti",
+          "name": "Anti-Netanyahu bloc",
+          "color": "#18a07a"
+        },
+        {
+          "id": "arab",
+          "name": "Arab parties",
+          "color": "#c62828"
+        },
+        {
+          "id": "other",
+          "name": "Other lists",
+          "color": "#9aa5b5"
+        }
+      ],
+      "polls": [
+        {
+          "source": "Kan 11 (Kantar)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 30,
+            "פה": 23,
+            "ט": 15,
+            "כן": 12,
+            "שס": 10,
+            "ג": 7,
+            "ל": 5,
+            "עם": 5,
+            "ום": 4,
+            "אמת": 5,
+            "מרצ": 4,
+            "ד": 0,
+            "ב": 0
+          }
+        },
+        {
+          "source": "Channel 12 (Midgam)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 31,
+            "פה": 23,
+            "ט": 14,
+            "כן": 12,
+            "שס": 10,
+            "ג": 7,
+            "ל": 6,
+            "עם": 4,
+            "ום": 5,
+            "אמת": 4,
+            "מרצ": 4,
+            "ד": 0,
+            "ב": 0
+          }
+        },
+        {
+          "source": "Channel 13 (Camil Fuchs)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 32,
+            "פה": 23,
+            "ט": 13,
+            "כן": 11,
+            "שס": 10,
+            "ג": 7,
+            "ל": 6,
+            "עם": 4,
+            "ום": 5,
+            "אמת": 5,
+            "מרצ": 4,
+            "ד": 0,
+            "ב": 0
+          }
+        },
+        {
+          "source": "Channel 14 (Direct Polls)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 31,
+            "פה": 23,
+            "ט": 12,
+            "כן": 11,
+            "שס": 10,
+            "ג": 8,
+            "ל": 6,
+            "עם": 4,
+            "ום": 4,
+            "אמת": 6,
+            "מרצ": 5,
+            "ד": 0,
+            "ב": 0
+          }
+        }
+      ]
+    },
+    "24": {
+      "agreements": [
+        [
+          "ב",
+          "ת"
+        ],
+        [
+          "פה",
+          "ל"
+        ],
+        [
+          "מחל",
+          "ט"
+        ],
+        [
+          "אמת",
+          "מרצ"
+        ],
+        [
+          "שס",
+          "ג"
+        ],
+        [
+          "כן",
+          "יז"
+        ]
+      ],
+      "order": [],
+      "parties": {
+        "מחל": {
+          "bloc": "netanyahu",
+          "name": "Likud"
+        },
+        "שס": {
+          "bloc": "netanyahu",
+          "name": "Shas"
+        },
+        "ג": {
+          "bloc": "netanyahu",
+          "name": "UTJ"
+        },
+        "ט": {
+          "bloc": "netanyahu",
+          "name": "Religious Zionist Party"
+        },
+        "פה": {
+          "bloc": "anti",
+          "name": "Yesh Atid"
+        },
+        "כן": {
+          "bloc": "anti",
+          "name": "Blue and White"
+        },
+        "ל": {
+          "bloc": "anti",
+          "name": "Yisrael Beiteinu"
+        },
+        "ת": {
+          "bloc": "anti",
+          "name": "New Hope"
+        },
+        "אמת": {
+          "bloc": "anti",
+          "name": "Labor"
+        },
+        "מרצ": {
+          "bloc": "anti",
+          "name": "Meretz"
+        },
+        "ודעם": {
+          "bloc": "arab",
+          "name": "Joint List"
+        },
+        "עם": {
+          "bloc": "arab",
+          "name": "Ra'am"
+        },
+        "זץ": {
+          "bloc": "netanyahu"
+        },
+        "יז": {
+          "bloc": "anti",
+          "name": "New Economic Party"
+        },
+        "ינ": {
+          "bloc": "arab"
+        },
+        "ב": {
+          "name": "Yamina"
+        }
+      },
+      "blocs": [
+        {
+          "id": "netanyahu",
+          "name": "Netanyahu bloc",
+          "color": "#1f4e9c"
+        },
+        {
+          "id": "anti",
+          "name": "Anti-Netanyahu bloc",
+          "color": "#18a07a"
+        },
+        {
+          "id": "arab",
+          "name": "Arab parties",
+          "color": "#c62828"
+        },
+        {
+          "id": "other",
+          "name": "Other lists",
+          "color": "#9aa5b5"
+        }
+      ],
+      "polls": [
+        {
+          "source": "Kan 11 (Kantar)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 31,
+            "פה": 18,
+            "ב": 7,
+            "ת": 6,
+            "ודעם": 8,
+            "שס": 9,
+            "ל": 7,
+            "ג": 7,
+            "אמת": 7,
+            "כן": 7,
+            "ט": 7,
+            "מרצ": 6,
+            "עם": 0
+          }
+        },
+        {
+          "source": "Channel 12 (Midgam)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 31,
+            "פה": 18,
+            "ב": 8,
+            "ת": 6,
+            "ודעם": 9,
+            "שס": 9,
+            "ל": 6,
+            "ג": 6,
+            "אמת": 7,
+            "כן": 7,
+            "ט": 7,
+            "מרצ": 6,
+            "עם": 0
+          }
+        },
+        {
+          "source": "Channel 13 (Camil Fuchs)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 33,
+            "פה": 16,
+            "ב": 7,
+            "ת": 5,
+            "ודעם": 8,
+            "שס": 8,
+            "ל": 8,
+            "ג": 7,
+            "אמת": 7,
+            "כן": 8,
+            "ט": 6,
+            "מרצ": 7,
+            "עם": 0
+          }
+        }
+      ]
+    },
+    "23": {
+      "agreements": [
+        [
+          "מחל",
+          "טב"
+        ],
+        [
+          "פה",
+          "אמת"
+        ],
+        [
+          "שס",
+          "ג"
+        ]
+      ],
+      "order": [],
+      "parties": {
+        "מחל": {
+          "bloc": "netanyahu",
+          "name": "Likud"
+        },
+        "שס": {
+          "bloc": "netanyahu",
+          "name": "Shas"
+        },
+        "ג": {
+          "bloc": "netanyahu",
+          "name": "UTJ"
+        },
+        "טב": {
+          "bloc": "netanyahu",
+          "name": "Yamina"
+        },
+        "פה": {
+          "bloc": "anti",
+          "name": "Blue and White"
+        },
+        "אמת": {
+          "bloc": "anti",
+          "name": "Labor-Gesher-Meretz"
+        },
+        "ודעם": {
+          "bloc": "arab",
+          "name": "Joint List"
+        },
+        "נץ": {
+          "bloc": "netanyahu",
+          "name": "Otzma Yehudit"
+        },
+        "זץ": {
+          "bloc": "netanyahu"
+        },
+        "ינ": {
+          "bloc": "arab"
+        },
+        "ל": {
+          "name": "Yisrael Beiteinu"
+        }
+      },
+      "blocs": [
+        {
+          "id": "netanyahu",
+          "name": "Netanyahu bloc",
+          "color": "#1f4e9c"
+        },
+        {
+          "id": "anti",
+          "name": "Anti-Netanyahu bloc",
+          "color": "#18a07a"
+        },
+        {
+          "id": "arab",
+          "name": "Arab parties",
+          "color": "#c62828"
+        },
+        {
+          "id": "other",
+          "name": "Other lists",
+          "color": "#9aa5b5"
+        }
+      ],
+      "polls": [
+        {
+          "source": "Kan 11 (Kantar)",
+          "kind": "Exit poll",
+          "seats": {
+            "פה": 33,
+            "מחל": 36,
+            "ודעם": 15,
+            "שס": 9,
+            "ל": 6,
+            "ג": 8,
+            "נץ": 0,
+            "טב": 7,
+            "אמת": 6
+          }
+        },
+        {
+          "source": "Channel 12 (Midgam)",
+          "kind": "Exit poll",
+          "seats": {
+            "פה": 33,
+            "מחל": 37,
+            "ודעם": 14,
+            "שס": 9,
+            "ל": 6,
+            "ג": 7,
+            "נץ": 0,
+            "טב": 7,
+            "אמת": 7
+          }
+        },
+        {
+          "source": "Channel 13 (Camil Fuchs)",
+          "kind": "Exit poll",
+          "seats": {
+            "פה": 32,
+            "מחל": 37,
+            "ודעם": 14,
+            "שס": 9,
+            "ל": 8,
+            "ג": 8,
+            "נץ": 0,
+            "טב": 6,
+            "אמת": 6
+          }
+        }
+      ]
+    },
+    "22": {
+      "agreements": [
+        [
+          "מחל",
+          "טב"
+        ],
+        [
+          "אמת",
+          "מרצ"
+        ],
+        [
+          "שס",
+          "ג"
+        ],
+        [
+          "פה",
+          "ל"
+        ]
+      ],
+      "order": [],
+      "parties": {
+        "מחל": {
+          "bloc": "netanyahu",
+          "name": "Likud"
+        },
+        "שס": {
+          "bloc": "netanyahu",
+          "name": "Shas"
+        },
+        "ג": {
+          "bloc": "netanyahu",
+          "name": "UTJ"
+        },
+        "טב": {
+          "bloc": "netanyahu",
+          "name": "Yamina"
+        },
+        "כף": {
+          "bloc": "netanyahu",
+          "name": "Otzma Yehudit"
+        },
+        "פה": {
+          "bloc": "anti",
+          "name": "Blue and White"
+        },
+        "אמת": {
+          "bloc": "anti",
+          "name": "Labor-Gesher"
+        },
+        "מרצ": {
+          "bloc": "anti",
+          "name": "Democratic Union"
+        },
+        "ודעם": {
+          "bloc": "arab",
+          "name": "Joint List"
+        },
+        "זץ": {
+          "bloc": "netanyahu",
+          "name": "Tzomet"
+        },
+        "כ": {
+          "bloc": "netanyahu"
+        },
+        "זן": {
+          "bloc": "netanyahu"
+        },
+        "כי": {
+          "bloc": "arab"
+        },
+        "ינ": {
+          "bloc": "arab"
+        },
+        "ל": {
+          "name": "Yisrael Beiteinu"
+        }
+      },
+      "blocs": [
+        {
+          "id": "netanyahu",
+          "name": "Netanyahu bloc",
+          "color": "#1f4e9c"
+        },
+        {
+          "id": "anti",
+          "name": "Anti-Netanyahu bloc",
+          "color": "#18a07a"
+        },
+        {
+          "id": "arab",
+          "name": "Arab parties",
+          "color": "#c62828"
+        },
+        {
+          "id": "other",
+          "name": "Other lists",
+          "color": "#9aa5b5"
+        }
+      ],
+      "polls": [
+        {
+          "source": "Kan 11 (Kantar)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 32,
+            "פה": 32,
+            "אמת": 5,
+            "ודעם": 12,
+            "טב": 7,
+            "שס": 9,
+            "ל": 10,
+            "ג": 8,
+            "מרצ": 5,
+            "כף": 0
+          }
+        },
+        {
+          "source": "Channel 12 (Midgam)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 33,
+            "פה": 34,
+            "אמת": 5,
+            "ודעם": 11,
+            "טב": 8,
+            "שס": 8,
+            "ל": 8,
+            "ג": 8,
+            "מרצ": 5,
+            "כף": 0
+          }
+        },
+        {
+          "source": "Channel 13 (Camil Fuchs)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 31,
+            "פה": 33,
+            "אמת": 6,
+            "ודעם": 13,
+            "טב": 6,
+            "שס": 9,
+            "ל": 8,
+            "ג": 8,
+            "מרצ": 6,
+            "כף": 0
+          }
+        }
+      ]
+    },
+    "21": {
+      "agreements": [
+        [
+          "מחל",
+          "טב"
+        ],
+        [
+          "נ",
+          "ל"
+        ],
+        [
+          "אמת",
+          "מרצ"
+        ],
+        [
+          "שס",
+          "ג"
+        ],
+        [
+          "ום",
+          "דעם"
+        ]
+      ],
+      "order": [],
+      "parties": {
+        "מחל": {
+          "bloc": "netanyahu",
+          "name": "Likud"
+        },
+        "שס": {
+          "bloc": "netanyahu",
+          "name": "Shas"
+        },
+        "ג": {
+          "bloc": "netanyahu",
+          "name": "UTJ"
+        },
+        "טב": {
+          "bloc": "netanyahu",
+          "name": "Union of Right-Wing Parties"
+        },
+        "כ": {
+          "bloc": "netanyahu",
+          "name": "Kulanu"
+        },
+        "ל": {
+          "bloc": "netanyahu",
+          "name": "Yisrael Beiteinu"
+        },
+        "נ": {
+          "bloc": "netanyahu",
+          "name": "New Right"
+        },
+        "ז": {
+          "bloc": "netanyahu",
+          "name": "Zehut"
+        },
+        "פה": {
+          "bloc": "anti",
+          "name": "Blue and White"
+        },
+        "אמת": {
+          "bloc": "anti",
+          "name": "Labor"
+        },
+        "מרצ": {
+          "bloc": "anti",
+          "name": "Meretz"
+        },
+        "ום": {
+          "bloc": "arab",
+          "name": "Hadash-Ta'al"
+        },
+        "דעם": {
+          "bloc": "arab",
+          "name": "Ra'am-Balad"
+        },
+        "זץ": {
+          "bloc": "netanyahu"
+        },
+        "ר": {
+          "bloc": "arab"
+        },
+        "ין": {
+          "bloc": "arab"
+        },
+        "נר": {
+          "name": "Gesher"
+        }
+      },
+      "blocs": [
+        {
+          "id": "netanyahu",
+          "name": "Netanyahu bloc",
+          "color": "#1f4e9c"
+        },
+        {
+          "id": "anti",
+          "name": "Anti-Netanyahu bloc",
+          "color": "#18a07a"
+        },
+        {
+          "id": "arab",
+          "name": "Arab parties",
+          "color": "#c62828"
+        },
+        {
+          "id": "other",
+          "name": "Other lists",
+          "color": "#9aa5b5"
+        }
+      ],
+      "polls": [
+        {
+          "source": "Kan 11 (Kantar)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 36,
+            "אמת": 8,
+            "פה": 37,
+            "דעם": 0,
+            "ום": 6,
+            "כ": 5,
+            "טב": 5,
+            "נ": 0,
+            "שס": 7,
+            "ל": 4,
+            "נר": 0,
+            "ג": 7,
+            "מרצ": 5,
+            "ז": 0
+          }
+        },
+        {
+          "source": "Channel 12 (Midgam)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 33,
+            "אמת": 6,
+            "פה": 37,
+            "דעם": 6,
+            "ום": 6,
+            "כ": 4,
+            "טב": 5,
+            "נ": 0,
+            "שס": 6,
+            "ל": 5,
+            "נר": 0,
+            "ג": 7,
+            "מרצ": 5,
+            "ז": 0
+          }
+        },
+        {
+          "source": "Channel 13 (Camil Fuchs)",
+          "kind": "Exit poll",
+          "seats": {
+            "מחל": 36,
+            "אמת": 7,
+            "פה": 36,
+            "דעם": 0,
+            "ום": 7,
+            "כ": 4,
+            "טב": 4,
+            "נ": 4,
+            "שס": 7,
+            "ל": 4,
+            "נר": 0,
+            "ג": 7,
+            "מרצ": 4,
+            "ז": 0
+          }
+        }
+      ]
+    }
+  },
+  "families": [
+    {
+      "id": "likud",
+      "name": "Likud",
+      "color": "#1f4e9c",
+      "runs": {
+        "21": "מחל",
+        "22": "מחל",
+        "23": "מחל",
+        "24": "מחל",
+        "25": "מחל",
+        "26": "מחל"
       }
     },
-    "26": {
-      "agreements": [["מחל", "ט"], ["שס", "ג"], ["דרך", "אמת"], ["רק", "ל"], ["עם", "ודם"]],
-      "order": [],
-      "parties": {
-        "מחל": {"name": "Likud", "color": "#1f4e9c"},
-        "רק": {"name": "Together (Bennett)", "color": "#25a8e0"},
-        "דרך": {"name": "Yashar! (Eisenkot)", "color": "#8e44ad"},
-        "ט": {"name": "Religious Zionism", "color": "#e8a317"},
-        "ב": {"name": "Otzma Yehudit", "color": "#d35400"},
-        "שס": {"name": "Shas", "color": "#1a1a1a"},
-        "ג": {"name": "UTJ", "color": "#6e6e6e"},
-        "ל": {"name": "Yisrael Beiteinu", "color": "#11808c"},
-        "כן": {"name": "Blue and White", "color": "#7f9fd8"},
-        "די": {"name": "Reservists & Economic", "color": "#6b7d2f"},
-        "אמת": {"name": "Democrats", "color": "#ec5466"},
-        "עם": {"name": "Ra'am", "color": "#2e7d32"},
-        "ודם": {"name": "Joint List", "color": "#c62828"}
+    {
+      "id": "yesh-atid",
+      "name": "Yesh Atid (Lapid)",
+      "color": "#25a8e0",
+      "runs": {
+        "21": "פה",
+        "22": "פה",
+        "23": "פה",
+        "24": "פה",
+        "25": "פה",
+        "26": "רק"
+      }
+    },
+    {
+      "id": "gantz",
+      "name": "Blue and White (Gantz)",
+      "color": "#7f9fd8",
+      "runs": {
+        "21": "פה",
+        "22": "פה",
+        "23": "פה",
+        "24": "כן",
+        "25": "כן",
+        "26": "כן"
+      }
+    },
+    {
+      "id": "shas",
+      "name": "Shas",
+      "color": "#1a1a1a",
+      "runs": {
+        "21": "שס",
+        "22": "שס",
+        "23": "שס",
+        "24": "שס",
+        "25": "שס",
+        "26": "שס"
+      }
+    },
+    {
+      "id": "utj",
+      "name": "UTJ",
+      "color": "#6e6e6e",
+      "runs": {
+        "21": "ג",
+        "22": "ג",
+        "23": "ג",
+        "24": "ג",
+        "25": "ג",
+        "26": "ג"
+      }
+    },
+    {
+      "id": "yb",
+      "name": "Yisrael Beiteinu",
+      "color": "#11808c",
+      "runs": {
+        "21": "ל",
+        "22": "ל",
+        "23": "ל",
+        "24": "ל",
+        "25": "ל",
+        "26": "ל"
+      }
+    },
+    {
+      "id": "rz",
+      "name": "Religious Zionism (Smotrich)",
+      "color": "#e8a317",
+      "runs": {
+        "21": "טב",
+        "22": "טב",
+        "23": "טב",
+        "24": "ט",
+        "25": "ט",
+        "26": "ט"
+      }
+    },
+    {
+      "id": "otzma",
+      "name": "Otzma Yehudit (Ben Gvir)",
+      "color": "#d35400",
+      "runs": {
+        "21": "טב",
+        "22": "כף",
+        "23": "נץ",
+        "24": "ט",
+        "25": "ט",
+        "26": "ב"
+      }
+    },
+    {
+      "id": "bennett",
+      "name": "Bennett (New Right, Yamina, Together)",
+      "color": "#7b5ea7",
+      "runs": {
+        "21": "נ",
+        "22": "טב",
+        "23": "טב",
+        "24": "ב",
+        "26": "רק"
+      }
+    },
+    {
+      "id": "new-hope",
+      "name": "New Hope (Sa'ar)",
+      "color": "#3c5a99",
+      "runs": {
+        "24": "ת",
+        "25": "כן",
+        "26": "מחל"
+      }
+    },
+    {
+      "id": "eisenkot",
+      "name": "Eisenkot (Yashar!)",
+      "color": "#8e44ad",
+      "runs": {
+        "25": "כן",
+        "26": "דרך"
+      }
+    },
+    {
+      "id": "labor",
+      "name": "Labor (Democrats)",
+      "color": "#ec5466",
+      "runs": {
+        "21": "אמת",
+        "22": "אמת",
+        "23": "אמת",
+        "24": "אמת",
+        "25": "אמת",
+        "26": "אמת"
+      }
+    },
+    {
+      "id": "meretz",
+      "name": "Meretz",
+      "color": "#6abf3f",
+      "runs": {
+        "21": "מרצ",
+        "22": "מרצ",
+        "23": "אמת",
+        "24": "מרצ",
+        "25": "מרצ",
+        "26": "אמת"
+      }
+    },
+    {
+      "id": "hadash-taal",
+      "name": "Hadash and Ta'al",
+      "color": "#c62828",
+      "runs": {
+        "21": "ום",
+        "22": "ודעם",
+        "23": "ודעם",
+        "24": "ודעם",
+        "25": "ום",
+        "26": "ודם"
+      }
+    },
+    {
+      "id": "raam",
+      "name": "Ra'am",
+      "color": "#2e7d32",
+      "runs": {
+        "21": "דעם",
+        "22": "ודעם",
+        "23": "ודעם",
+        "24": "עם",
+        "25": "עם",
+        "26": "עם"
+      }
+    },
+    {
+      "id": "balad",
+      "name": "Balad",
+      "color": "#9c27b0",
+      "runs": {
+        "21": "דעם",
+        "22": "ודעם",
+        "23": "ודעם",
+        "24": "ודעם",
+        "25": "ד",
+        "26": "ודם"
+      }
+    },
+    {
+      "id": "kulanu",
+      "name": "Kulanu (Kahlon)",
+      "color": "#4aa3df",
+      "runs": {
+        "21": "כ",
+        "22": "מחל"
+      }
+    },
+    {
+      "id": "gesher",
+      "name": "Gesher (Orly Levy)",
+      "color": "#f06292",
+      "runs": {
+        "21": "נר",
+        "22": "אמת",
+        "23": "אמת"
+      }
+    },
+    {
+      "id": "zelekha",
+      "name": "New Economic (Zelekha), Reservists",
+      "color": "#6b7d2f",
+      "runs": {
+        "24": "יז",
+        "25": "יז",
+        "26": "די"
       }
     }
-  }
+  ]
 }

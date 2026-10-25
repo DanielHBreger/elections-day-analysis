@@ -1,0 +1,44 @@
+<!doctype html>
+<!-- The link preview image (data/og.png), 1200 x 630. Remake it with a screenshot of this page at that size. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link preview</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Suez+One&display=swap" rel="stylesheet">
+<style>
+  :root { --envelope: #E6ECF4; --slip: #FFFFFF; --ink: #0E1B33; --muted: #56657F; --rule: #C7D1DF; --tekhelet: #0038B8; }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: var(--envelope); color: var(--ink); font-family: "IBM Plex Sans Hebrew", Arial, sans-serif; }
+  .card { position: absolute; inset: 40px; background: var(--slip); border: 1px solid var(--rule); box-shadow: inset 0 -10px 0 var(--tekhelet); display: grid; grid-template-columns: 1fr 520px; align-items: center; gap: 24px; padding: 0 56px; }
+  h1 { margin: 0 0 18px; font: 400 76px/1.05 "Suez One", Georgia, serif; }
+  p { margin: 0 0 10px; font-size: 30px; line-height: 1.3; color: var(--muted); }
+  p b { color: var(--ink); font-weight: 600; }
+  svg { width: 100%; height: auto; display: block; }
+  .total { font: 400 64px "Suez One", Georgia, serif; fill: var(--ink); text-anchor: middle; }
+  .note { font: 500 13px "IBM Plex Sans Hebrew", Arial, sans-serif; fill: var(--muted); text-anchor: middle; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div>
+    <h1>Knesset live count</h1>
+    <p><b>Every list, every seat</b>, worked out as the votes are counted.</p>
+    <p>Projections, closest calls and an image ready for Discord.</p>
+  </div>
+  <svg id="arc" viewBox="0 -2 360 192" aria-hidden="true"></svg>
+</div>
+<script>
+// The page's own hemicycle layout (index.html seatPositions), in shades of tekhelet: no party's colours, no result.
+function seatPositions(n) {
+  const totals = [3, 15, 33, 61, 95, 138, 189, 247, 313, 388, 469, 559, 657, 762, 876, 997];
+  const rows = totals.findIndex(t => t >= n) + 1, rad = 0.4 / rows, pos = [];
+  const ring = (R, J) => { for (let j = 0; j < J; j++) { const a = J === 1 ? Math.PI / 2 : j * (Math.PI - 2 * Math.sin(rad / R)) / (J - 1) + Math.sin(rad / R); pos.push([a, R * Math.cos(a) + 1.75, R * Math.sin(a)]); } };
+  for (let i = 1; i < rows; i++) ring((3 * rows + 4 * i - 2) / (4 * rows), Math.floor(n / totals[rows - 1] * Math.PI / (2 * Math.asin(2 / (3 * rows + 4 * i - 2)))));
+  ring((7 * rows - 2) / (4 * rows), n - pos.length);
+  return { rad, pos: pos.sort((p, q) => q[0] - p[0]) };
+}
+const { rad, pos } = seatPositions(120), shades = ['#0038B8', '#3B6FD8', '#7FA2E6', '#B9CBEF', '#8A96AB'];
+document.getElementById('arc').innerHTML = pos.map(([, x, y], k) => `<circle cx="${(x * 100 + 5).toFixed(2)}" cy="${((1.75 - y) * 100 + 5).toFixed(2)}" r="${(rad * 100).toFixed(2)}" fill="${shades[Math.min(4, Math.floor(k / 26))]}"/>`).join('')
+  + '<text class="total" x="180" y="160">120</text><text class="note" x="180" y="180">61 seats for a majority</text>';
+</script>
+</body>
+</html>
